@@ -70,21 +70,31 @@
         </Grid.ColumnDefinitions>
         <ToolBarTray Orientation="Vertical">
             <ToolBarTray.Resources >
-                <Style TargetType="{x:Type FrameworkElement}">
-                    <Setter Property="Margin" Value="5" />
-                </Style>
 
-                <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type FrameworkElement}}" />
-                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type FrameworkElement}}" />
-                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type FrameworkElement}}" />
+                <Style x:Key="{x:Static ToolBar.ButtonStyleKey}" TargetType="Button">
+                    <Setter Property="Foreground" Value="Blue"/>
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+                <Style x:Key="{x:Static ToolBar.TextBoxStyleKey}" TargetType="TextBox">
+                    <Setter Property="Background" Value="DarkBlue"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="FontStyle" Value="Italic"/>
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Width" Value="75"/>
+                </Style>
             </ToolBarTray.Resources>
             <ToolBar IsEnabled="{Binding ElementName=MainMenu, Path=IsEnabled}">
                 <Button x:Name="LoadXaml" Content="LoadXaml" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="LoadXaml_Click"/>
                 <Button x:Name="ParseArr" Content="ParseArr" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="ParseArr_Click"/>
-                <Label Content="DeclCnt" HorizontalAlignment="Center"/>
-                <TextBlock x:Name="DeclCnt" Text="dcnt" HorizontalAlignment="Center"/>
-                <Label Content="ValueCnt" HorizontalAlignment="Center"/>
-                <TextBlock x:Name="ValueCnt" Text="vcnt" HorizontalAlignment="Center"/>
+                <Separator/>
+                <Label Content="DeclCnt:" HorizontalAlignment="Center"/>
+                <TextBox x:Name="DeclCnt" Text="dcnt" HorizontalAlignment="Center"/>
+                <Label Content="ValueCnt:" HorizontalAlignment="Center"/>
+                <TextBox x:Name="ValueCnt" Text="vcnt" HorizontalAlignment="Center"/>
             </ToolBar>
         </ToolBarTray>
 
