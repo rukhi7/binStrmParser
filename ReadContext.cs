@@ -150,7 +150,7 @@ namespace nvmParser
             int btN = bitPos / 8;
             if (arr.Length <= btN)
             {
-                SendMessageToUi($"--Stream Parse Error: fld:{FieldWholeName(res)} end pos:{bitPos / 8} out of limit:{limitPos / 8}!");
+                SendMessageToUi($"--Stream Parse Error: fld:{FieldWholeName(res)} end pos:{btN} out of input Array limit:{arr.Length}!");
                 limitPos = 0;
             }
             if (limitPos != 0)
@@ -164,7 +164,7 @@ namespace nvmParser
                 if (bitPos > limitPos)
                 {
 
-                    SendMessageToUi($"--Stream Parse Error: fld:{FieldWholeName(res)} end pos:{bitPos/8} out of limit:{limitPos/8}!");
+                    SendMessageToUi($"--Stream Parse Error: fld:{FieldWholeName(res)} end pos:{btN}:{bitPos % 8} out of limit:{limitPos/8}!");
                     limitPos = 0;
                 }
                 else if (bitPos == limitPos)

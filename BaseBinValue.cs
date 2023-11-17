@@ -30,7 +30,7 @@ namespace nvmParser
 
             return newArray;
         }
-        public object fldVal { get => $"{getValue():X2}"; }
+        public object fldVal { get => $"0x{getValue():X2}"; }
         public string BitPos { get => $"Pos:{bitPos/8}:{bitPos%8};"; }
         public virtual ObservableCollection<object> Children
         {

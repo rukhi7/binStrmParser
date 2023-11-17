@@ -51,6 +51,7 @@ namespace nvmParser
 
         private void ParseArr_Click(object sender, RoutedEventArgs e)
         {
+            textBox.Items.Clear();
             parseProc proc = new parseProc(this);
             proc.Init(rootElmnt);
             

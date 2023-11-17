@@ -54,7 +54,7 @@
         <HierarchicalDataTemplate DataType="{x:Type local:BaseBinValue}"      >
             <StackPanel Orientation="Horizontal" Background="LightGreen"  Margin="1" >
                 <TextBlock Text="{Binding Path=Descript}" Padding="10,1, 1,1"/>
-                <TextBlock Text=": 0x" Padding="1,1, 0,1"/>
+                <TextBlock Text=": " Padding="1,1, 0,1"/>
                 <TextBlock Text="{Binding Path=fldVal}" Padding="1,1, 10,1"/>
                 <TextBlock Text="{Binding Path=BitPos }" Padding="1,1, 10,1"/>
             </StackPanel>
