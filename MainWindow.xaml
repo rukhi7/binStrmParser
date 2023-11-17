@@ -1,0 +1,97 @@
+﻿<Window x:Class="nvmParser.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:nvmParser"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <Window.Resources>
+        <local:ComplexField x:Name="root" x:Key="root" >
+            <local:BaseBinaryFied x:Name="f1" bitLen="8" />
+            <local:BaseBinaryFied bitLen="8" />
+            <local:FieldsArr ElementsCount="2">
+                            <local:BaseBinaryFied bitLen="16" />
+            </local:FieldsArr>
+        </local:ComplexField>
+
+        <HierarchicalDataTemplate DataType="{x:Type local:DescriptionRoot}"
+                                ItemsSource="{Binding Path=Children}">
+            <Grid Background="Yellow">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <TextBlock Text="{Binding Path=Name}" />
+                <TextBlock Text="{Binding Path=FldLen}" />
+            </StackPanel>
+                <TextBlock Text="{Binding Path=LoadedFile}" />
+            </Grid>
+        </HierarchicalDataTemplate>
+        
+        <HierarchicalDataTemplate DataType="{x:Type local:ComplexField}"
+                                ItemsSource="{Binding Path=Children}">
+            <StackPanel Orientation="Horizontal" Background="Orange">
+                <TextBlock Text="{Binding Path=Name}" />
+                <TextBlock Text="{Binding Path=FldLen}" />
+            </StackPanel>
+        </HierarchicalDataTemplate>
+        <HierarchicalDataTemplate DataType="{x:Type local:BaseBinaryFied}"      >
+            <StackPanel Orientation="Horizontal" Background="LightGreen">
+                <TextBlock Text="{Binding Path=Name}" />
+                <TextBlock Text="{Binding Path=FldLen}" />
+            </StackPanel>
+        </HierarchicalDataTemplate>
+        
+        <HierarchicalDataTemplate DataType="{x:Type local:parentBinValue}"
+                                ItemsSource="{Binding Path=Children}">
+            <StackPanel Orientation="Horizontal" Background="LightSkyBlue" Margin="2" >
+            <TextBlock Text="{Binding Path=Descript}"/>
+                <TextBlock Text="{Binding Path=startPos}" />
+            </StackPanel>
+        </HierarchicalDataTemplate>
+        <HierarchicalDataTemplate DataType="{x:Type local:BaseBinValue}"      >
+            <StackPanel Orientation="Horizontal" Background="LightGreen"  Margin="1" >
+                <TextBlock Text="{Binding Path=Descript}" Padding="10,1, 1,1"/>
+                <TextBlock Text=": 0x" Padding="1,1, 0,1"/>
+                <TextBlock Text="{Binding Path=fldVal}" Padding="1,1, 10,1"/>
+                <TextBlock Text="{Binding Path=BitPos }" Padding="1,1, 10,1"/>
+            </StackPanel>
+        </HierarchicalDataTemplate>
+
+    </Window.Resources>
+    <Grid RenderTransformOrigin="0.251,0.482">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <ToolBarTray Orientation="Vertical">
+            <ToolBarTray.Resources >
+                <Style TargetType="{x:Type FrameworkElement}">
+                    <Setter Property="Margin" Value="5" />
+                </Style>
+
+                <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type FrameworkElement}}" />
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type FrameworkElement}}" />
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type FrameworkElement}}" />
+            </ToolBarTray.Resources>
+            <ToolBar IsEnabled="{Binding ElementName=MainMenu, Path=IsEnabled}">
+                <Button x:Name="LoadXaml" Content="LoadXaml" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="LoadXaml_Click"/>
+                <Button x:Name="ParseArr" Content="ParseArr" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="ParseArr_Click"/>
+                <Label Content="DeclCnt" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="DeclCnt" Text="dcnt" HorizontalAlignment="Center"/>
+                <Label Content="ValueCnt" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="ValueCnt" Text="vcnt" HorizontalAlignment="Center"/>
+            </ToolBar>
+        </ToolBarTray>
+
+        <ListBox x:Name="textBox" Grid.Column="1" Margin="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+        <GridSplitter Grid.Column="2" Width="3" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
+        <TreeView Name="fieldsTree" Grid.Column="3">
+
+        </TreeView>
+    </Grid>
+</Window>

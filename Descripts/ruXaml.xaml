@@ -1,0 +1,77 @@
+<local:DescriptionRoot Name="root"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:nvmParser;assembly=nvmParser"
+ >
+    <!-- Comment -->
+    <local:BaseBinaryFied Name="fld1" bitLen="8" />
+
+    <local:ComplexField Name="ByteBitStructure">
+        <local:BaseBinaryFied bitLen="16" Name="DataValid"/>
+        <local:BaseBinaryFied bitLen="16" Name="NumDataBytes"/>
+        <local:FloatPaddingBinaryFld Name="DastmAreaPadding" ByteSize="267"/>
+        <local:ComplexField Name="ByteBitSubStructure">
+            <local:StreamBitsFld bitLen="4" Name="PCod_E"/>
+            <local:StreamBitsFld bitLen="11" Name="TrnVER_ad"/>
+            <local:StreamBitsFld bitLen="9" Name="Dser_CNT_2"/>
+            <local:FldDefArray Name="Dserx" SizeLink="Dser_CNT_2" ZeroBase="1">
+
+                <local:NamedByFirst Name="Dser">
+                    <local:StreamBitsFld bitLen="10" Name="Dser"/>
+                    <local:StreamBitsFld bitLen="1" Name="IS_EXT"/>
+                    <local:StreamBitsFld bitLen="1" Name="Grub_USED"/>
+                    <local:StreamBitsFld bitLen="2" Name="TRANSCode"/>
+                    <local:FldDefArray Name="Grub_RIBs" SizeLink="Grub_USED">
+                        <local:NamedByFirst Name="Grub_RIB">
+                            <local:StreamBitsFld bitLen="8" Name="Grub_RIB"/>
+                            <local:StreamBitsFld bitLen="4" Name="RFU1"/>
+                            <local:StreamBitsFld bitLen="4" Name="Grub_RAP"/>
+                        </local:NamedByFirst>
+                    </local:FldDefArray>
+                    <local:StreamBitsFld bitLen="2" Name="StrId_CNT"/>
+                    <local:FldDefArray Name="StrIds" SizeLink="StrId_CNT" ZeroBase="1">
+                        <local:NamedByFirst Name="StrId">
+                            <local:StreamBitsFld bitLen="10" Name="StrId"/>
+                            <local:StreamBitsFld bitLen="6" Name="Datid_CNT"/>
+                            <local:FldDefArray Name="Datids" SizeLink="Datid_CNT">
+                                <local:NamedByFirst Name="StrId" nameAdditionIndex="2">
+                                    <local:StreamBitsFld bitLen="1" Name="Grub_REQUIRED"/>
+                                    <local:StreamBitsFld bitLen="5" Name="RFU2"/>
+                                    <local:StreamBitsFld bitLen="10" Name="Datid"/>
+                                </local:NamedByFirst>
+                            </local:FldDefArray>
+                        </local:NamedByFirst>
+                    </local:FldDefArray>
+                    <local:FldDefArray Name="EXT_DATA" SizeLink="IS_EXT" >
+                        <local:NamedByFirst Name="StrId">
+                            <local:BaseBinaryFied bitLen="8" Name="EXT_CNT"/>
+                            <!-- bitLen="depends" of SizeLink value -->
+                            <local:HexBinaryFied Name="EXT_DATA" SizeLink="EXT_CNT"/>
+                        </local:NamedByFirst>
+                    </local:FldDefArray>
+                </local:NamedByFirst>
+
+            </local:FldDefArray>
+        </local:ComplexField>
+        <!--      <local:BaseBinaryFied bitLen="16" Name="DataValid"/>  -->
+    </local:ComplexField>
+    <!--           -->
+    <local:FieldsArr Name="array1" ElementsCount="2">
+                    <local:ComplexField Name="arrL1">
+                        <local:BaseBinaryFied bitLen="16" Name="arrf1"/>
+                        <local:BaseBinaryFied bitLen="8" Name="arrf2"/>
+                    </local:ComplexField>
+    </local:FieldsArr>
+    <local:BaseBinaryFied Name="fld2" bitLen="16" />
+    <local:ComplexField Name="root1">
+        <local:BaseBinaryFied Name="fld13" bitLen="8" />
+        <local:BaseBinaryFied Name="fld123" bitLen="16" />
+        <local:BaseBinaryFied Name="fld15" bitLen="8" />
+
+        <local:BaseBinaryFied Name="f126" bitLen="16" />
+    </local:ComplexField>
+    <local:BaseBinaryFied Name="fld127" bitLen="16" />
+
+
+
+</local:DescriptionRoot>
