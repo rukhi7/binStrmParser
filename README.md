@@ -1,6 +1,6 @@
 # nvmParser
-app to parse and view NVM data
-initially it was app to visualize Non Volatile Memory data
+app to parse and view NVM data.
+Initially it was app to visualize Non Volatile Memory data.
 It uses ruXaml.xaml file to define data structure to be found and filled from binary stream.
 It is two stage process:
 1. to load data description from ruXaml.xaml file (any xaml file later)
