@@ -64,9 +64,9 @@
     <Grid RenderTransformOrigin="0.251,0.482">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
-            <ColumnDefinition />
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
-            <ColumnDefinition />
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         <ToolBarTray Orientation="Vertical">
             <ToolBarTray.Resources >
