@@ -23,9 +23,9 @@ namespace nvmParser
         MainWindow wnd;
         internal ReadContext context;
         BaseBinaryFied curField;
-        internal void Init(object rootElmnt)
+        internal void Init(object rootElmnt, string fl)
         {
-            context = new ReadContext();
+            context = new ReadContext(fl);
             curField = context.InitParseContext(rootElmnt, wnd);
             wnd.fieldsTree.ItemsSource = ((parentBinValue)context.roootParentBin).Children;
             RunWorkerAsync();

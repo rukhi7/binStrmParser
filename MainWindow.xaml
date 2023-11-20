@@ -47,8 +47,8 @@
         <HierarchicalDataTemplate DataType="{x:Type local:parentBinValue}"
                                 ItemsSource="{Binding Path=Children}">
             <StackPanel Orientation="Horizontal" Background="LightSkyBlue" Margin="2" >
-            <TextBlock Text="{Binding Path=Descript}"/>
-                <TextBlock Text="{Binding Path=startPos}" />
+                <TextBlock Text="{Binding Path=Descript}" Padding="3,1, 1,1"/>
+                <TextBlock Text="{Binding Path=startPos}" Padding="1,1, 10,1"/>
             </StackPanel>
         </HierarchicalDataTemplate>
         <HierarchicalDataTemplate DataType="{x:Type local:BaseBinValue}"      >
@@ -62,6 +62,11 @@
 
     </Window.Resources>
     <Grid RenderTransformOrigin="0.251,0.482">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
@@ -103,5 +108,15 @@
         <TreeView Name="fieldsTree" Grid.Column="3">
 
         </TreeView>
+        <WrapPanel Grid.Row="1" Grid.ColumnSpan="4"  Orientation="Horizontal">
+            <TextBlock Text="Description File:" VerticalAlignment="Center"/>
+            <TextBox x:Name="FileName" Text="FileName" VerticalAlignment="Center"/>
+            <Button Content="..." Command="local:Command.OpenDescrFile" CommandParameter="{Binding ElementName=FileName}" />
+        </WrapPanel>
+        <WrapPanel Grid.Row="2" Grid.ColumnSpan="4"  Orientation="Horizontal">
+            <TextBlock Text="BinFile:" VerticalAlignment="Center"/>
+            <TextBox x:Name="BinFileName" Text="" VerticalAlignment="Center"/>
+            <Button Content="..." Command="local:Command.OpenDescrFile" CommandParameter="{Binding ElementName=BinFileName}" />
+        </WrapPanel>
     </Grid>
 </Window>

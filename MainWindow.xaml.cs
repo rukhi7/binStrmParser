@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Path = System.IO.Path;
 
 namespace nvmParser
 {
@@ -26,12 +27,48 @@ namespace nvmParser
         public MainWindow()
         {
             InitializeComponent();
+            string flNm = @"Descripts/ruXaml.xaml";//c:\tmp\
+            FileName.Text = Path.GetFullPath(flNm);
+
+            flNm = @"binStreams\initialArr.BIN";
+            BinFileName.Text = Path.GetFullPath(flNm);
+
+            CommandManager.RegisterClassCommandBinding(typeof(MainWindow), new CommandBinding(
+                            Command.OpenDescrFile,
+                            (obj, e) =>
+                            {
+                                e.Handled = true;
+                                ((MainWindow)obj).ShowFileOpenDialog((TextBox)e.Parameter);
+                            },
+                            (obj, e) => { e.CanExecute = true; }));
+        }
+        void ShowFileOpenDialog(TextBox textBox)
+        {
+            string fname = textBox.Text;
+            string path;
+            if (string.IsNullOrEmpty(fname)) 
+            {
+                path = Environment.CurrentDirectory;
+            }
+            else
+            {
+                path = System.IO.Path.GetFullPath(fname);
+            }
+            
+            var dialog = new Microsoft.Win32.OpenFileDialog
+            {
+                DefaultExt = ".txt",
+                InitialDirectory = path,
+            };
+            if (dialog.ShowDialog() == true)
+                textBox.Text = dialog.FileName;
         }
 
         object rootElmnt;
         private void LoadXaml_Click(object sender, RoutedEventArgs e)
         {
-            string xamlFile = @"Descripts/ruXaml.xaml";//c:\tmp\
+            //            string xamlFile = @"Descripts/ruXaml.xaml";//c:\tmp\
+            string xamlFile = FileName.Text;
             using (FileStream fs = new FileStream(xamlFile, FileMode.Open))
             {
                 rootElmnt = (object)XamlReader.Load(fs);
@@ -52,8 +89,9 @@ namespace nvmParser
         private void ParseArr_Click(object sender, RoutedEventArgs e)
         {
             textBox.Items.Clear();
+            string binFileName = BinFileName.Text;
             parseProc proc = new parseProc(this);
-            proc.Init(rootElmnt);
+            proc.Init(rootElmnt, binFileName);
             
         }
         internal void scrollToButtom()
@@ -74,6 +112,11 @@ namespace nvmParser
                     textBox.Items.Add(msg); 
                     scrollToButtom(); 
         }
-}
+    }
+    public static class Command
+    {
 
+        public static readonly RoutedUICommand OpenDescrFile = new RoutedUICommand("Open Descr File", "OpenDescrFile", typeof(MainWindow));
+//        public static readonly RoutedUICommand OpenBinFile = new RoutedUICommand("Open Bin File", "OpenBinFile", typeof(MainWindow));
+    }
 }

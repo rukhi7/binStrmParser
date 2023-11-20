@@ -42,20 +42,37 @@ namespace nvmParser
             0xf1, 0x26,
             0xf1, 0x27,
 
-            0xcc, 0xcc,0xcc, 0xcc,0xcc, 0xcc,0xcc, 0xcc,0xcc, 0xcc,0xcc, 0xcc,0xcc, 0xcc,0xcc, 0xcc
+            0x34, 0x56,0xcc, 0xcc,0x23, 0x12,0x78, 0x9a,0xcc, 0xcc,0xcc, 0xcc,0xcc, 0xcc,0xcc, 0xcc
         };
-        private const long NVM_START_READ_OFFSET = 58 * 256 * 256;
+
         MainWindow wnd;
+
+        public ReadContext(string fl)
+        {
+            if(!string.IsNullOrEmpty(fl))
+            {
+                using (FileStream nvmFile = File.OpenRead(fl))
+                {
+                    long sz = nvmFile.Length;
+                    if(sz > 1024) sz = 1024;
+                    byte[] bts = new byte[sz];
+                    nvmFile.Read(bts, 0, (int)bts.Length);
+                    arr = bts;
+                }
+            }
+            //else 
+            //{//it was used to create initialBin-file!
+            //    fl = @"binStreams\initialArr.BIN";
+            //    using (FileStream nvmFile = File.OpenWrite(fl))
+            //    {
+            //        nvmFile.Write(arr, 0, arr.Length);
+            //    }
+            //}
+        }
         internal BaseBinaryFied InitParseContext(object rootElmnt, MainWindow wnd)
         {
             this.wnd = wnd;
-/*        FileStream nvmFile = File.OpenRead(@"c:\tmp\REF28Bf005-Full_4M.BIN");
-        nvmFile.Seek(NVM_START_READ_OFFSET, SeekOrigin.Begin);
-        byte[] bts = new byte[256*256];
-        if (nvmFile.Read(bts, 0, (int)bts.Length) < bts.Length)
-        throw new Exception("Not enough data to read");
-        arr = bts;*/
-        ComplexField rt = (ComplexField)rootElmnt;
+            ComplexField rt = (ComplexField)rootElmnt;
             roootParentBin = new parentBinValue(rt, arr, bitPos);
             curparent = roootParentBin;
             rt.valueObj = roootParentBin;
@@ -90,7 +107,6 @@ namespace nvmParser
 
             if(flag)
             {
-                //&nvmArr[0x1648]
                 uint? tval = obj.valueObj?.getValue() as uint?;
                 parent = obj.parent;
                 while (parent != null)
