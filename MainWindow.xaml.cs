@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -27,6 +28,7 @@ namespace nvmParser
         public MainWindow()
         {
             InitializeComponent();
+            initHexEdit();
             string flNm = @"Descripts/ruXaml.xaml";//c:\tmp\
             FileName.Text = Path.GetFullPath(flNm);
 
@@ -41,6 +43,15 @@ namespace nvmParser
                                 ((MainWindow)obj).ShowFileOpenDialog((TextBox)e.Parameter);
                             },
                             (obj, e) => { e.CanExecute = true; }));
+        }
+
+        internal void initHexEdit(byte[] arrp = null) 
+        {
+            byte[] arr = new byte[] { 1,2,3,4,5,6,7,8,9,10,
+                        1,2,3,4,5,6,7,8,9,10,
+                        1,2,3,4,5,6,7,8,9,10};
+            if (arrp != null) arr = arrp;
+            HexEdit.Stream = new MemoryStream(arr);
         }
         void ShowFileOpenDialog(TextBox textBox)
         {
@@ -92,7 +103,6 @@ namespace nvmParser
             string binFileName = BinFileName.Text;
             parseProc proc = new parseProc(this);
             proc.Init(rootElmnt, binFileName);
-            
         }
         internal void scrollToButtom()
         {
@@ -111,6 +121,18 @@ namespace nvmParser
         {
                     textBox.Items.Add(msg); 
                     scrollToButtom(); 
+        }
+
+        private void fieldsTree_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            //            MessageBox.Show(((TreeViewItem)e.NewValue).Header.ToString());
+            BaseBinValue itm = e.NewValue as BaseBinValue;
+            if (itm != null) 
+            {
+                int pos = itm.bitPos / 8;
+                HexEdit.SelectionStart = pos;
+                HexEdit.SelectionStop = itm.getEndPos();
+            }
         }
     }
     public static class Command

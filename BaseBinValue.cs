@@ -12,7 +12,26 @@ namespace nvmParser
         internal parentBinValue parent;
         protected BaseBinaryFied descrpt;
         protected byte[] nvmArr;
-        protected int bitPos;
+        internal int bitPos;
+        public int getEndPos()
+        {
+            int endPos = 0;
+            int indx = parent.Children.IndexOf(this);
+            if (indx == parent.Children.Count - 1)
+            {
+                endPos = parent.getEndPos();
+            }
+            else
+            {
+                BaseBinValue next = parent.Children[indx + 1] as BaseBinValue;
+                if (next != null)
+                    endPos = (next.bitPos - 1) / 8;
+            }
+            if (endPos != 0 && bitPos / 8 >= endPos)
+                endPos = bitPos / 8;
+            return endPos;
+        }
+
         public virtual  object getValue()
         //                internal override int setValue(byte[] nvmArr, int bitPos)
         {

@@ -73,6 +73,7 @@ namespace nvmParser
         {
             this.wnd = wnd;
             ComplexField rt = (ComplexField)rootElmnt;
+            wnd.initHexEdit(arr);
             roootParentBin = new parentBinValue(rt, arr, bitPos);
             curparent = roootParentBin;
             rt.valueObj = roootParentBin;

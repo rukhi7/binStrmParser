@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:nvmParser"
+        xmlns:control="clr-namespace:WpfHexaEditor;assembly=WPFHexaEditor"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
     <Window.Resources>
@@ -71,7 +72,8 @@
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         <ToolBarTray Orientation="Vertical">
             <ToolBarTray.Resources >
@@ -105,9 +107,29 @@
 
         <ListBox x:Name="textBox" Grid.Column="1" Margin="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
         <GridSplitter Grid.Column="2" Width="3" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
-        <TreeView Name="fieldsTree" Grid.Column="3">
+        <TreeView Name="fieldsTree" Grid.Column="3" SelectedItemChanged="fieldsTree_SelectedItemChanged">
 
         </TreeView>
+        <control:HexEditor Grid.Column="4"
+                    AllowAutoHightLighSelectionByte="False"
+                        x:Name="HexEdit"
+                        Width="Auto"
+                        Height="Auto"
+                        AllowByteCount="False"
+                        AllowDrop="True"
+                        AllowExtend="False"
+                        AppendNeedConfirmation="True"
+                        ApplicationName="Wpf Hexeditor control sample"
+                        BorderThickness="1"
+                        ByteGrouping="FourByte"
+                        ByteSpacerPositioning="HexBytePanel"
+                        ByteSpacerVisualStyle="Dash"
+                        ByteSpacerWidthTickness="Normal"
+                        DataStringVisual="Hexadecimal"
+                        DefaultCopyToClipboardMode="HexaString"
+                        ForegroundSecondColor="Blue"
+                        OffSetStringVisual="Hexadecimal"
+                        UseCustomBackGroudBlock="True" />
         <WrapPanel Grid.Row="1" Grid.ColumnSpan="4"  Orientation="Horizontal">
             <TextBlock Text="Description File:" VerticalAlignment="Center"/>
             <TextBox x:Name="FileName" Text="FileName" VerticalAlignment="Center"/>
