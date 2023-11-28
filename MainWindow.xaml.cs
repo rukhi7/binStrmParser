@@ -28,6 +28,7 @@ namespace nvmParser
         public MainWindow()
         {
             InitializeComponent();
+            WindowState = WindowState.Maximized;
             initHexEdit();
             string flNm = @"Descripts/ruXaml.xaml";//c:\tmp\
             FileName.Text = Path.GetFullPath(flNm);

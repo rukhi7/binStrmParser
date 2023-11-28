@@ -16,6 +16,7 @@ namespace nvmParser
         public int getEndPos()
         {
             int endPos = 0;
+            if (parent == null) return 0;
             int indx = parent.Children.IndexOf(this);
             if (indx == parent.Children.Count - 1)
             {
@@ -195,6 +196,10 @@ namespace nvmParser
                 resVal >>= (8 - shft);
             }
             return resVal;
+        }
+        public override string Descript
+        {
+            get { return $"{descrpt.Name}:{descrpt.FldLen}b"; }
         }
     }
     class intFromBytes : BaseBinValue
